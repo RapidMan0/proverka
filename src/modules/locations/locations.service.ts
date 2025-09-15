@@ -10,7 +10,7 @@ export class LocationsService {
     new Location({ id: 1, country: 'Russia', city: 'Moscow', userId: 1 }),
     new Location({ id: 2, country: 'Russia', city: 'Saint Petersburg', userId: 2 }),
   ];
-  private nextId = 3;
+  private _nextId = 3;
 
   constructor(
     @Inject(forwardRef(() => UsersService))
@@ -26,9 +26,13 @@ export class LocationsService {
     }
   }
 
+  private getNextId() {
+    return this._nextId++;
+  }
+
   create(dto: CreateLocationDto) {
     this.ensureUserExistsIfProvided(dto.userId);
-    const loc = new Location({ id: this.nextId++, ...dto });
+    const loc = new Location({ id: this.getNextId(), ...dto });
     this.locations.push(loc);
     return loc;
   }

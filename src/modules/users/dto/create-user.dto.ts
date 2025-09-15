@@ -3,7 +3,7 @@ import { IsString, IsOptional, IsEmail, IsInt, IsNotEmpty, Matches, MinLength } 
 import { Type } from 'class-transformer';
 
 export class CreateUserDto {
-  @ApiProperty({ example: 'Ivan Petrov' })
+  @ApiProperty()
   @IsString({ message: 'Name must be a string' })
   @IsNotEmpty({ message: 'Name is required' })
   @MinLength(2, { message: 'Name must be at least $constraint1 characters' })

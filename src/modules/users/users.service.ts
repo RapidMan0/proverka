@@ -12,7 +12,7 @@ export class UsersService {
     new User({ id: 2, name: 'Olga Smirnova', email: 'olga.smirnova@example.com', locationId: 2 }),
     new User({ id: 3, name: 'Alex Johnson', locationId: 3 }),
   ];
-  private nextId = 4;
+  private _nextId = 4;
 
   constructor(
     @Inject(forwardRef(() => LocationsService))
@@ -31,8 +31,12 @@ export class UsersService {
     return { ...user, location };
   }
 
+  private getNextId() {
+    return this._nextId++;
+  }
+
   create(dto: CreateUserDto) {
-    const user = new User({ id: this.nextId++, ...dto });
+    const user = new User({ id: this.getNextId(), ...dto });
     this.users.push(user);
     return this.attachLocation(user);
   }
